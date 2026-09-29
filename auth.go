@@ -138,7 +138,7 @@ func (a *Auth) valid(tok string) bool {
 	return ok && time.Now().Before(exp)
 }
 
-const sessionCookie = "fanout_session"
+const sessionCookie = "homesocks5_session"
 
 // Wrap 保护一个 handler，未登录时 API 返回 401、页面跳登录。
 func (a *Auth) Wrap(next http.Handler) http.Handler {
@@ -248,30 +248,30 @@ const loginHTML = `<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>fanout</title>
+<title>homesocks5</title>
 <style>
 body{margin:0;height:100vh;display:flex;flex-direction:column;gap:16px;
   align-items:center;justify-content:center;
-  background:#12151a;color:#dde3ec;
-  font:13px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+  background:#f5f5f7;color:#1d1d1f;
+  font:13px/1.5 -apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Helvetica Neue",Helvetica,Arial,sans-serif}
 .links{display:flex;gap:16px}
 .links a{color:#8b95a5;text-decoration:none;font-size:12px}
 .links a:hover{color:#4a9eda}
-form{background:#181c23;border:1px solid #262c36;border-radius:6px;
+form{background:#ffffff;border:1px solid #e5e5ea;box-shadow:0 4px 20px rgba(0,0,0,0.06);border-radius:12px;
   padding:22px 24px;width:300px}
 h1{font-size:13px;font-weight:600;margin:0 0 16px}
 label{display:block;color:#8b95a5;font-size:11px;margin-bottom:6px}
 input{width:100%;box-sizing:border-box;background:#0e1116;border:1px solid #262c36;
-  color:#dde3ec;border-radius:4px;padding:7px 9px;font:inherit}
+  color:#dde3ec;border-radius:8px;padding:7px 9px;font:inherit}
 input:focus{outline:none;border-color:#4a9eda}
 button{width:100%;margin-top:14px;background:#4a9eda;border:0;color:#0b0e12;
-  font:inherit;font-weight:600;border-radius:4px;padding:8px;cursor:pointer}
+  font:inherit;font-weight:600;border-radius:8px;padding:8px;cursor:pointer}
 .err{color:#c25450;font-size:11px;margin-top:10px;min-height:14px}
 </style>
 </head>
 <body>
 <form id="f">
-  <h1>fanout</h1>
+  <h1>homesocks5</h1>
   <label for="pw">访问口令</label>
   <input type="password" id="pw" autofocus autocomplete="current-password">
   <button type="submit">进入</button>
@@ -281,7 +281,7 @@ button{width:100%;margin-top:14px;background:#4a9eda;border:0;color:#0b0e12;
   <a href="https://t.me/+ft-zI76oovgwNmRh" target="_blank" rel="noopener">交流群</a>
   <a href="https://youtube.com/@joeyblog" target="_blank" rel="noopener">油管</a>
   <a href="https://joeyblog.net" target="_blank" rel="noopener">博客</a>
-  <a href="https://github.com/byJoey/fanout" target="_blank" rel="noopener">GitHub</a>
+  <a href="https://github.com/byJoey/homesocks5" target="_blank" rel="noopener">GitHub</a>
 </div>
 <script>
 document.getElementById('f').onsubmit = async e => {

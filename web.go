@@ -16,34 +16,36 @@ const indexHTML = `<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>fanout</title>
+<title>homesocks5</title>
 <style>
 :root{
-  --bg:#12151a; --panel:#181c23; --line:#262c36; --text:#dde3ec;
-  --dim:#8b95a5; --accent:#4a9eda; --ok:#3fa66b; --warn:#c9903a; --bad:#c25450;
+  --bg:#f5f5f7; --panel:#ffffff; --line:#e5e5ea; --text:#1d1d1f;
+  --dim:#86868b; --accent:#0071e3; --ok:#34c759; --warn:#ff9500; --bad:#ff3b30;
+  --shadow:0 2px 8px rgba(0,0,0,0.04);
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--text);
-  font:13px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
-header{display:flex;align-items:center;gap:16px;padding:10px 16px;
-  border-bottom:1px solid var(--line);background:var(--panel)}
-h1{font-size:13px;font-weight:600;margin:0;letter-spacing:0}
+  font:13px/1.5 -apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Helvetica Neue",Helvetica,Arial,sans-serif}
+header{display:flex;align-items:center;gap:16px;padding:12px 20px;
+  border-bottom:1px solid var(--line);background:rgba(255,255,255,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+h1{font-size:15px;font-weight:600;margin:0;letter-spacing:-0.2px;color:#1d1d1f}
 .spacer{flex:1}
-button{font:inherit;color:var(--text);background:#222833;border:1px solid var(--line);
-  border-radius:4px;padding:4px 10px;cursor:pointer;display:inline-flex;
-  align-items:center;gap:5px;white-space:nowrap}
-button:hover:not(:disabled){border-color:var(--accent)}
+button{font:inherit;color:var(--text);background:#ffffff;border:1px solid var(--line);
+  border-radius:8px;padding:5px 12px;cursor:pointer;display:inline-flex;
+  align-items:center;gap:5px;white-space:nowrap;box-shadow:var(--shadow);transition:all .15s ease}
+button:hover:not(:disabled){border-color:var(--accent);color:var(--accent)}
 button:disabled{opacity:.45;cursor:default}
-button.primary{background:var(--accent);border-color:var(--accent);color:#0b0e12;font-weight:600}
-button.icon{padding:3px 6px;background:transparent;border-color:transparent;color:var(--dim)}
-button.icon:hover:not(:disabled){color:var(--accent);border-color:var(--line)}
-button.icon.danger:hover:not(:disabled){color:var(--bad);border-color:rgba(194,84,80,.35)}
+button.primary{background:var(--accent);border-color:var(--accent);color:#ffffff;font-weight:500;box-shadow:0 2px 6px rgba(0,113,227,0.3)}
+button.primary:hover:not(:disabled){background:#0077ed;color:#ffffff}
+button.icon{padding:4px 8px;background:transparent;border-color:transparent;color:var(--dim);box-shadow:none}
+button.icon:hover:not(:disabled){color:var(--accent);border-color:transparent}
+button.icon.danger:hover:not(:disabled){color:var(--bad);border-color:transparent}
 svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.8;
   stroke-linecap:round;stroke-linejoin:round;flex:none}
 main{padding:14px 16px 40px;max-width:1180px;margin:0 auto}
 .bar{display:flex;align-items:center;gap:10px;margin-bottom:12px}
 .bar h2{font-size:12px;margin:0;font-weight:600;color:var(--dim)}
-.exit{border:1px solid var(--line);border-radius:6px;margin-bottom:8px;
+.exit{border:1px solid var(--line);border-radius:12px;margin-bottom:8px;
   background:var(--panel);overflow:hidden}
 .exit>.row{display:grid;gap:6px 12px;align-items:center;padding:9px 12px;
   grid-template-columns:14px minmax(132px,auto) 1fr auto auto auto;
@@ -63,11 +65,11 @@ main{padding:14px 16px 40px;max-width:1180px;margin:0 auto}
 .meta{color:var(--dim);font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .chips{display:flex;gap:6px;flex-wrap:wrap}
 .chip{border:1px solid var(--line);border-radius:3px;padding:1px 7px;font-size:11px;
-  color:var(--dim);cursor:pointer;background:#0e1116}
+  color:var(--dim);cursor:pointer;background:#fbfbfd;border:1px solid #e5e5ea;color:#1d1d1f}
 .chip:hover{border-color:var(--accent);color:var(--text)}
 .chip.none{border-style:dashed;cursor:default}
 .chip.none:hover{border-color:var(--line);color:var(--dim)}
-.orphan{margin-top:18px;border:1px solid var(--line);border-radius:6px;
+.orphan{margin-top:18px;border:1px solid var(--line);border-radius:12px;
   background:var(--panel);padding:10px 12px}
 .orphan .top{display:flex;align-items:center;gap:10px;margin-bottom:8px}
 .orphan .top h3{font-size:12px;margin:0;font-weight:600;color:var(--dim)}
@@ -79,17 +81,17 @@ main{padding:14px 16px 40px;max-width:1180px;margin:0 auto}
 .acts{display:flex;gap:2px;justify-self:end}
 .errline{padding:0 12px 9px 38px;color:var(--bad);font-size:11px;
   overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.empty{border:1px dashed var(--line);border-radius:6px;padding:40px 20px;
+.empty{border:1px dashed var(--line);border-radius:12px;padding:40px 20px;
   text-align:center;color:var(--dim)}
 .empty button{margin-top:14px}
 .jobs{margin-bottom:12px}
-.job{border:1px solid var(--line);border-radius:6px;background:var(--panel);
+.job{border:1px solid var(--line);border-radius:12px;background:var(--panel);
   padding:10px 12px;margin-bottom:8px}
 .job .top{display:flex;align-items:center;gap:10px;margin-bottom:8px}
 .job .top strong{font-weight:600;font-size:12px}
 .steps{display:flex;flex-wrap:wrap;gap:6px}
 .step{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--dim);
-  border:1px solid var(--line);border-radius:3px;padding:2px 7px;background:#0e1116}
+  border:1px solid var(--line);border-radius:3px;padding:2px 7px;background:#fbfbfd;border:1px solid #e5e5ea;color:#1d1d1f}
 .step.ok{color:var(--ok);border-color:rgba(63,166,107,.35)}
 .step.failed{color:var(--bad);border-color:rgba(194,84,80,.35)}
 .step.running{color:var(--warn);border-color:rgba(201,144,58,.35)}
@@ -104,13 +106,13 @@ main{padding:14px 16px 40px;max-width:1180px;margin:0 auto}
     grid-template-areas:"dot ip acts" ". meta meta" ". socks socks" ". chips chips"}
   .exit .chips{margin-top:2px}
   .bar{flex-wrap:wrap}}
-.modal{position:fixed;inset:0;background:rgba(8,10,14,.72);display:none;
+.modal{position:fixed;inset:0;background:rgba(0,0,0,0.35);backdrop-filter:blur(10px);display:none;
   align-items:center;justify-content:center;z-index:50;padding:20px}
 .modal.open{display:flex}
-.sheet{background:var(--bg);border:1px solid var(--line);border-radius:6px;
+.sheet{background:var(--bg);border:1px solid var(--line);border-radius:12px;
   width:min(680px,100%);max-height:86vh;display:flex;flex-direction:column}
 .sheet .head{display:flex;align-items:center;gap:10px;padding:10px 14px;
-  border-bottom:1px solid var(--line);background:var(--panel);border-radius:6px 6px 0 0}
+  border-bottom:1px solid var(--line);background:var(--panel);border-radius:12px 6px 0 0}
 .sheet .head h2{font-size:12px;margin:0;font-weight:600}
 .sheet .body{overflow:auto;padding:14px}
 .sheet .foot{display:flex;align-items:center;gap:10px;padding:10px 14px;
@@ -121,18 +123,18 @@ label.f[hidden]{display:none}
 label.f>span{display:block;color:var(--dim);font-size:11px;margin-bottom:6px}
 .regions{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));
   gap:6px;max-height:224px;overflow:auto}
-.rg{border:1px solid var(--line);background:#0e1116;border-radius:4px;padding:7px 9px;
+.rg{border:1px solid var(--line);background:#fbfbfd;border:1px solid #e5e5ea;color:#1d1d1f;border-radius:8px;padding:7px 9px;
   cursor:pointer;text-align:left;display:block;width:100%}
 .rg:hover{border-color:var(--accent)}
-.rg.sel{border-color:var(--accent);background:rgba(74,158,218,.1)}
+.rg.sel{border-color:var(--accent);background:rgba(0,113,227,0.08)}
 .rg b{font-weight:600;font-size:12px;display:block;overflow:hidden;
   text-overflow:ellipsis;white-space:nowrap}
 .rg em{display:block;font-style:normal;color:var(--dim);font-size:11px;margin-top:2px}
 .stepper{display:flex;align-items:center;gap:0;width:fit-content;
-  border:1px solid var(--line);border-radius:4px;overflow:hidden;background:#0e1116}
+  border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#fbfbfd;border:1px solid #e5e5ea;color:#1d1d1f}
 .stepper button{border:0;border-radius:0;background:transparent;padding:5px 11px}
-select,input[type=search],input[type=text]{font:inherit;background:#0e1116;
-  border:1px solid var(--line);color:var(--text);border-radius:4px;
+select,input[type=search],input[type=text]{font:inherit;background:#fbfbfd;border:1px solid #e5e5ea;color:#1d1d1f;
+  border:1px solid var(--line);color:var(--text);border-radius:8px;
   padding:5px 8px;width:100%}
 select:focus,input[type=search]:focus,input[type=text]:focus{outline:none;border-color:var(--accent)}
 .stepper input[type=text]{width:56px;text-align:center;font:inherit;background:transparent;
@@ -147,8 +149,8 @@ select:focus,input[type=search]:focus,input[type=text]:focus{outline:none;border
 .updver{font-size:12px;color:var(--text)}
 .updver b{font-weight:600}
 .updver span{color:var(--dim);margin-left:8px}
-.updnotes{margin-top:10px;padding:10px;background:#0e1116;border:1px solid var(--line);
-  border-radius:4px;font-size:12px;line-height:1.6;color:var(--dim);white-space:pre-wrap;
+.updnotes{margin-top:10px;padding:10px;background:#fbfbfd;border:1px solid #e5e5ea;color:#1d1d1f;border:1px solid var(--line);
+  border-radius:8px;font-size:12px;line-height:1.6;color:var(--dim);white-space:pre-wrap;
   max-height:180px;overflow:auto}
 label.chk{display:flex;align-items:center;gap:7px;color:var(--text);font-size:12px;
   cursor:pointer;margin:0}
@@ -157,8 +159,8 @@ label.chk input{margin:0}
 .kv{display:grid;grid-template-columns:76px 1fr;gap:5px 12px;margin:0 0 14px}
 .kv dt{color:var(--dim)}
 .kv dd{margin:0;word-break:break-all}
-.share{padding:10px;background:#0e1116;border:1px solid var(--line);
-  border-radius:4px;word-break:break-all;font-size:12px;line-height:1.7;margin-bottom:8px}
+.share{padding:10px;background:#fbfbfd;border:1px solid #e5e5ea;color:#1d1d1f;border:1px solid var(--line);
+  border-radius:8px;word-break:break-all;font-size:12px;line-height:1.7;margin-bottom:8px}
 .editbar{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap;
   padding:12px 0;border-top:1px solid var(--line);margin-top:4px}
 .ef{display:block}
@@ -169,7 +171,7 @@ label.chk input{margin:0}
 .chead{display:flex;align-items:center;gap:10px;margin:14px 0 8px;
   padding-top:12px;border-top:1px solid var(--line)}
 .chead h3{font-size:12px;margin:0;font-weight:600;color:var(--dim)}
-.client{border:1px solid var(--line);border-radius:4px;padding:8px 10px;margin-bottom:8px}
+.client{border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin-bottom:8px}
 .orow{display:flex;align-items:center;gap:10px;padding:6px 0}
 .orow select{width:200px}
 .crow{display:flex;align-items:center;gap:10px}
@@ -178,13 +180,13 @@ label.chk input{margin:0}
   white-space:nowrap;max-width:280px}
 .client .share{margin:8px 0 0}
 .share button{margin-top:8px}
-textarea{width:100%;min-height:300px;background:#0e1116;border:1px solid var(--line);
-  color:var(--text);border-radius:4px;
+textarea{width:100%;min-height:300px;background:#fbfbfd;border:1px solid #e5e5ea;color:#1d1d1f;border:1px solid var(--line);
+  color:var(--text);border-radius:8px;
   font:12px/1.8 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
   padding:10px 12px;resize:vertical}
 textarea:focus{outline:none;border-color:var(--accent)}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);
-  background:var(--panel);border:1px solid var(--line);border-radius:4px;
+  background:var(--panel);border:1px solid var(--line);border-radius:8px;
   padding:8px 14px;font-size:12px;z-index:80;opacity:0;pointer-events:none;
   transition:opacity .18s}
 .toast.show{opacity:1}
@@ -193,7 +195,7 @@ textarea:focus{outline:none;border-color:var(--accent)}
 </head>
 <body>
 <header>
-  <h1>fanout</h1>
+  <h1>homesocks5</h1>
   <span class="count" id="panel"></span>
   <span class="spacer"></span>
   <button class="icon" id="settingsBtn" title="设置">
@@ -203,7 +205,7 @@ textarea:focus{outline:none;border-color:var(--accent)}
     <a href="https://t.me/+ft-zI76oovgwNmRh" target="_blank" rel="noopener">交流群</a>
     <a href="https://youtube.com/@joeyblog" target="_blank" rel="noopener">油管</a>
     <a href="https://joeyblog.net" target="_blank" rel="noopener">博客</a>
-    <a href="https://github.com/byJoey/fanout" target="_blank" rel="noopener">GitHub</a>
+    <a href="https://github.com/whypuss/homesock5" target="_blank" rel="noopener">GitHub</a>
   </nav>
 </header>
 
@@ -542,10 +544,10 @@ async function copy(text){
 let view = {exits:[], direct:[], panel:'', backend:'', public_ip:''};
 let inbounds = [];
 
-// 自建模式下入站由 fanout 自己管，界面要提供新建入口；
+// 自建模式下入站由 homesocks5 自己管，界面要提供新建入口；
 // 接管 3x-ui 时入站归面板管，这里只读不写。
 function isNative(){ return view.backend === 'native'; }
-// xray-cf-lite 模式下节点归它管，fanout 只改路由，界面不给新建入口
+// xray-cf-lite 模式下节点归它管，homesocks5 只改路由，界面不给新建入口
 function isXCL(){ return view.backend === 'xray-cf-lite'; }
 const BACKEND_NAME = {'native':'自建 Xray', '3x-ui':'3x-ui', 'xray-cf-lite':'xray-cf-lite'};
 function backendName(){ return BACKEND_NAME[view.backend] || '3x-ui'; }
@@ -596,7 +598,7 @@ function renderExits(){
 }
 
 // 停掉出口后它的入站会留在面板里。这些入站现在走直连，
-// 用户既看不出它们和 fanout 的关系，也没有清理入口，所以单独列出来。
+// 用户既看不出它们和 homesocks5 的关系，也没有清理入口，所以单独列出来。
 function renderOrphans(){
   const box = $('#orphans');
   const list = view.direct || [];
@@ -649,9 +651,9 @@ async function poll(){
     $('#panel').textContent = view.panel
       ? (backendName() + ': ' + view.panel)
       : (view.panel_info || '');
-    // xray-cf-lite 的节点由它自己生成，fanout 这边只管把它们导到哪条出口
+    // xray-cf-lite 的节点由它自己生成，homesocks5 这边只管把它们导到哪条出口
     $('#newnode').hidden = isXCL();
-    // 链接由 xray-cf-lite 的订阅体系发，fanout 这边导不出来
+    // 链接由 xray-cf-lite 的订阅体系发，homesocks5 这边导不出来
     $('#exportAll').hidden = isXCL();
     renderExits();
     renderOrphans();
@@ -1099,7 +1101,7 @@ let curCred = null;
 
 function socksURL(host, port, user, pass){ return "socks5://" + host + ":" + port; }
 
-// SOCKS5 端口监听在母机（跑 fanout 的这台服务器）上，客户端要连的是母机的
+// SOCKS5 端口监听在母机（跑 homesocks5 的这台服务器）上，客户端要连的是母机的
 // 公网 IPv4，流量再从出口 IP 出去。出口 IP 是"出去以后"的地址，不能当连接地址。
 // public_ip 是后端探测到的母机公网地址；探测不到才退回访问面板用的主机名。
 function credHost(e){
