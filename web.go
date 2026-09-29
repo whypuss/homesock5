@@ -405,8 +405,8 @@ textarea:focus{outline:none;border-color:var(--accent)}
         复制地址
       </button>
       <span class="spacer"></span>
-      <button data-close="credbox">取消</button>
-      
+      <button data-close="credbox">关闭</button>
+      <button id="crsave" style="display:none"></button>
     </div>
   </div>
 </div>
